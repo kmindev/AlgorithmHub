@@ -2,29 +2,35 @@ import java.util.Scanner;
 
 public class Solution {
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		Scanner sc = new Scanner(System.in);
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
 
-		int N = sc.nextInt();
-		String s = "";
-		for (int i = 1; i <= N; i++) {
-			String str = Integer.toString(i);
-			if(str.contains("3")||str.contains("6")||str.contains("9")) {
-				for(int j=0; j<str.length();j++) {
-					if(str.charAt(j) == '3' || str.charAt(j) == '6' || str.charAt(j) == '9') {
-						System.out.print("-");
-					}
-				}
-				System.out.print(" ");
-			}
-			else {
-				System.out.print(i+" ");
-			}
-		}
+        int N = sc.nextInt();
 
-		
-		
-	}
+        for(int i=1; i<=N; i++) {
+            String num = Integer.toString(i);
+            num = num.replaceAll("3", "-");
+            num = num.replaceAll("6", "-");
+            num = num.replaceAll("9", "-");
+
+            if(num.contains("-")) {
+                num = num.replaceAll("0", "");
+                num = num.replaceAll("1", "");
+                num = num.replaceAll("2", "");
+                num = num.replaceAll("4", "");
+                num = num.replaceAll("5", "");
+                num = num.replaceAll("7", "");
+                num = num.replaceAll("8", "");
+            }
+
+            System.out.print(num+" ");
+
+
+
+
+        }
+
+
+    }
 
 }
