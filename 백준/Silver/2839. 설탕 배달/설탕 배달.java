@@ -16,8 +16,7 @@ public class Main {
             result++;
             N -= 3;
         }
-        if(N == 0)
-            System.out.println(result);
+        if(N == 0) System.out.println(result);
         else System.out.println(-1);
     }
 }
