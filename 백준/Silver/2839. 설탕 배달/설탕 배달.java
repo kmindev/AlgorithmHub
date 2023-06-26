@@ -6,12 +6,12 @@ public class Main {
         int result = 0;
 
         while (true) {
-            if (N % 5 == 0) {
+            if (N % 5 == 0) { // 5의 배수인 경우
                 result += (N / 5);
                 N %= 5;
             }
 
-            if (N < 3) break;
+            if (N < 3) break; // 더이상 나눌 수 없는 경우
 
             result++;
             N -= 3;
