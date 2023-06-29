@@ -8,14 +8,13 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int N = Integer.parseInt(br.readLine());
         List<Integer> inputs = new LinkedList<>();
-        int min = Integer.MAX_VALUE;
-        int max = Integer.MIN_VALUE;
-        int sum = 0; //
+        int min = Integer.MAX_VALUE; // 최소값
+        int max = Integer.MIN_VALUE; // 최대값
+        int sum = 0; // 합
         int freq = 0; // 최빈값
         int[] numCount = new int[8001]; // 양수 빈도수를 카운트 하기 위한 배열
-        int maxCount = Integer.MIN_VALUE;
-        List<Integer> maxCountIndex = new LinkedList<>();
-
+        int maxCount = Integer.MIN_VALUE; // 최대 빈도수
+        List<Integer> maxCountIndex = new LinkedList<>(); // 최대빈도수에 해당되는 index를 모두 추가하기 위한 list
 
         for (int i = 0; i < N; i++) {
             int input = Integer.parseInt(br.readLine());
@@ -23,19 +22,15 @@ public class Main {
             min = Math.min(input, min);
             max = Math.max(input, max);
             inputs.add(input);
-            numCount[input + 4000]++;
+            /**
+             * 음수: 0 ~ 3999,       -4000 = 0 ,    -1 = 3999
+             * 0 =  4000
+             * 양수: 4001 ~ 8000    1 = 4001,   4000 = 8000
+             */
+            numCount[input + 4000]++; // 빈도를 구하기 위함.
         }
 
         Collections.sort(inputs);
-
-//        for (int i = 0; i < inputs.size(); i++) { // 빈도를 구하기 위함.
-//            /**
-//             * 음수: 0 ~ 3999,       -4000 = 0 ,    -1 = 3999
-//             * 0 =  4000
-//             * 양수: 4001 ~ 8000    1 = 4001,   4000 = 8000
-//             */
-//            numCount[inputs.get(i) + 4000]++;
-//        }
 
         for (int i = 0; i < numCount.length; i++) {
             maxCount = Math.max(maxCount, numCount[i]); // 최대 빈도수를 구함.
