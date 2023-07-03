@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -14,11 +15,10 @@ public class Main {
         }
 
         Collections.sort(list);
-        Collections.reverse(list);
         int max = 0;
 
         for (int i = 0; i < list.size(); i++) {
-            max = Math.max(max, list.get(i) * (i+1));
+            max = Math.max(max, list.get(N - i - 1) * (i+1));
         }
 
         System.out.println(max);
