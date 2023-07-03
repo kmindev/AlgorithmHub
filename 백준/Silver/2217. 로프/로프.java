@@ -18,12 +18,7 @@ public class Main {
         int max = 0;
 
         for (int i = 0; i < list.size(); i++) {
-            int j = 0;
-            int w = 0;
-            for (j = 0; j <= i; j++)
-                w += list.get(i);
-
-            max = Math.max(max, w);
+            max = Math.max(max, list.get(i) * (i+1));
         }
 
         System.out.println(max);
