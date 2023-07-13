@@ -17,14 +17,15 @@ public class Main {
             oliPrice[i] = Integer.parseInt(st2.nextToken());
         }
 
-        int minPrice = oliPrice[0]; // 리터당 가격은 1 ~ 1,000,000,000 이기 때문에 int
-        long result = minPrice * distance[0]; // 도시의 개수(2 ~100,000) , 도시간의 거리 (1 ~ 1,000,000,000)이기 떄문에 long
+        // 오버플로우 발생으로 long 사용
+        long minPrice = oliPrice[0]; 
+        long result = minPrice * distance[0];
 
         for (int i = 1; i < oliPrice.length; i++) {
-            if (minPrice > oliPrice[i]) {
+            if (minPrice > oliPrice[i]) { // 기름의 가격이 더 낮으면 최소 금액을 갱신한다.
                 minPrice = oliPrice[i];
             }
-            result+=(minPrice * distance[i]);
+            result+=(minPrice * distance[i]); // 거리 * 가격을 누적합 
         }
 
         System.out.println(result);
