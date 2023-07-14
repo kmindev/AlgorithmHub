@@ -22,7 +22,7 @@ public class Main {
 
         for (int i = 0; i < n; i++) {
             for (int j = coinTypes[i]; j <= m; j++) {
-                if (dp[j - coinTypes[i]] != 100000)  // 화폐 종류와 금액이 나누어 떨어질 때
+                if (dp[j - coinTypes[i]] != 100000)  // 금액을 만들 수 있는 경우
                     dp[j] = Math.min(dp[j], dp[j - coinTypes[i]] + 1);
             }
         }
