@@ -1,17 +1,14 @@
-import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
 
 class Solution {
     public int solution(int[] nums) {
         int selAmt = nums.length / 2;
         
-        HashMap<Integer, Integer> map = new HashMap<>();
+        HashSet<Integer> set = new HashSet<>();
         for(int num : nums) {
-            map.put(num, map.getOrDefault(num, 0) + 1);
+            set.add(num);
         }
         
-        
-        
-        return map.size() > selAmt ? selAmt : map.size();
+        return set.size() > selAmt ? selAmt : set.size();
     }
 }
