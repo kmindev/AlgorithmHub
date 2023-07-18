@@ -2,8 +2,6 @@ import java.util.*;
 
 class Solution {
     boolean solution(String s) {
-        boolean answer = true;
-
         Deque<String> q = new ArrayDeque<>();
         
         for(int i=0; i<s.length(); i++) {
@@ -11,7 +9,7 @@ class Solution {
             if(s1.equals("(")) {
                 q.offer(s1);
             } else {
-                if(q.poll()==null)
+                if(q.poll() == null)
                     return false;
             }
         }
