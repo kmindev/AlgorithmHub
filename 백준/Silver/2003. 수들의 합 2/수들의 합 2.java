@@ -18,18 +18,19 @@ public class Main {
         }
 
         int result = 0;
+        int sum = 0;
+        int j = 0;
+        
+        for (int i = 0; i < arr.length; i++) {
 
-        for(int i=0; i<arr.length; i++) {
-            int sum = 0;
-            int j=i;
-
-            while(sum < m && j < arr.length) {
-                sum+= arr[j];
+            while (sum < m && j < arr.length) {
+                sum += arr[j];
                 j++;
             }
 
-            if(sum == m)
+            if (sum == m)
                 result++;
+            sum -= arr[i];
 
         }
 
