@@ -18,11 +18,11 @@ public class Main {
         }
 
         int minLen = Integer.MAX_VALUE;
+        int sum = 0;
+        int j = 0;
+        int len = 0;
 
         for (int i = 0; i < arr.length; i++) {
-            int sum = 0;
-            int j = i;
-            int len = 0;
             while (sum < s && j < arr.length) {
                 sum += arr[j];
                 j++;
@@ -32,10 +32,13 @@ public class Main {
             if (sum >= s) {
                 minLen = Math.min(minLen, len);
             }
+
+            sum -= arr[i];
+            len--;
         }
-        if(minLen == Integer.MAX_VALUE)
+        if (minLen == Integer.MAX_VALUE)
             System.out.println(0);
-        else 
+        else
             System.out.println(minLen);
     }
 }
