@@ -32,6 +32,7 @@ class Main {
     }
 
     private static int bfs() {
+        // bfs
         while (!q.isEmpty()) {
             Node node = q.poll();
             int x = node.x;
@@ -55,13 +56,15 @@ class Main {
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
-                if (map[i][j] == 0)
+
+                if (map[i][j] == 0) // 익지 않은 토마토가 있으면
                     return -1;
-                result = Math.max(result, map[i][j]);
+                
+                result = Math.max(result, map[i][j]); // 최대 일 수를 구한다.
             }
         }
 
-        return result - 1;
+        return result - 1; // 최대 일 수 - 1 
     }
 
 
