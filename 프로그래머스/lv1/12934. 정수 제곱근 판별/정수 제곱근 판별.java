@@ -2,15 +2,8 @@ import java.math.*;
 
 class Solution {
     public long solution(long n) {
-        boolean check = false;
-        long i = 1;
-        for(; i<=Math.sqrt(n); i++) {
-            if(i * i == n) {
-                check = true;
-                break;
-            }
-        }
+        double sqrt = Math.sqrt(n);
         
-        return check ? (i + 1) * (i + 1) : -1;
+        return (int)sqrt == sqrt ? ((long)sqrt + 1) * ((long)sqrt + 1) : -1;
     }
 }
