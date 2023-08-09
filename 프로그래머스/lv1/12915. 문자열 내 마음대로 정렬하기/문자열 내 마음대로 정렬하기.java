@@ -1,25 +1,16 @@
+import java.util.*;
+
 class Solution {
     public String[] solution(String[] strings, int n) {
-        String[] answer = {};
-        int minIndex = 0;
-        
-        for(int i=0; i<strings.length; i++) {
-            for(int j=i; j<strings.length; j++) {
-                if(strings[j].charAt(n) < strings[i].charAt(n)) {
-                    String temp = strings[i];
-                    strings[i] = strings[j];
-                    strings[j] = temp;
-                }
-                
-                if(strings[j].charAt(n) == strings[i].charAt(n)) {
-                    if(strings[i].compareTo(strings[j]) > 0) {
-                        String temp = strings[i];
-                        strings[i] = strings[j];
-                        strings[j] = temp;
-                    }
-                }
-            }
-        }
+        Arrays.sort(strings, new Comparator<String>(){
+            @Override
+            public int compare(String s1, String s2) {
+              if(s1.charAt(n) > s2.charAt(n)) return 1;
+              else if(s1.charAt(n) == s2.charAt(n)) return s1.compareTo(s2);
+              else if(s1.charAt(n) < s2.charAt(n)) return -1;
+              else return 0;
+            } 
+        });
         return strings;
     }
 }
