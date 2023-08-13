@@ -8,14 +8,6 @@ class Solution {
             }
         }
         
-        int len = answer.length();
-        
-        answer.append(0);
-        
-        for(int i=len - 1; i >= 0; i--) {
-            answer.append(answer.substring(i, i + 1));
-        }
-        
-        return answer.toString();
+        return answer.toString() + "0" + answer.reverse().toString() ;
     }
 }
