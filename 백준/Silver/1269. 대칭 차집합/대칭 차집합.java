@@ -24,21 +24,20 @@ class Main {
             setB.add(Integer.parseInt(st.nextToken()));
         }
 
-        int ab = 0;
-        int ba = 0;
+        int answer = 0;
 
         for (int a : setA) {
             if (!setB.contains(a)) {
-                ab++;
+                answer++;
             }
         }
 
         for (int b : setB) {
             if (!setA.contains(b)) {
-                ba++;
+                answer++;
             }
         }
 
-        System.out.println(ab + ba);
+        System.out.println(answer);
     }
 }
