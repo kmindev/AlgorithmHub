@@ -24,8 +24,7 @@ class Solution {
         // 3. notifyListHash 기반으로 reportHash 만들기
         HashMap<String, Integer> reportHash = new HashMap<>();
 
-        for (String key : notifyListHash.keySet()) {
-            List<String> reportList = notifyListHash.get(key);
+        for (List<String> reportList : notifyListHash.values()) {
             if (reportList.size() >= k) {
                 for (String rep : reportList) {
                     reportHash.put(rep, reportHash.getOrDefault(rep, 0) + 1);
@@ -34,13 +33,8 @@ class Solution {
         }
 
         // 4. reportHash 기반으로 answer 배열 채우기
-        for (String key : reportHash.keySet()) {
-            for(int i=0; i< id_list.length; i++) {
-                if(key.equals(id_list[i])) {
-                    answer[i] = reportHash.get(key);
-                    break;
-                }
-            }
+        for (int i = 0; i < id_list.length; i++) {
+            answer[i] = reportHash.getOrDefault(id_list[i], 0);
         }
 
         return answer;
