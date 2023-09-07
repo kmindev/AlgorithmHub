@@ -5,7 +5,7 @@ class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
         // 1. 입력 받기
-        int t = Integer.parseInt(br.readLine());
+        long t = Integer.parseInt(br.readLine());
         int[] times = {3000, 60, 10};
 
         // 2. T초를 맞출 수 없을 때
