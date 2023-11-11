@@ -2,10 +2,8 @@ class Solution {
     public String solution(String my_string, int n) {
         StringBuilder answer = new StringBuilder();
         
-        for(int i=0; i < my_string.length(); i++) {
-            for(int j=0; j<n; j++) {
-                answer.append(my_string.charAt(i));   
-            }
+        for(char ch : my_string.toCharArray()) {
+            answer.append((ch + "").repeat(n)); 
         }
         
         return answer.toString();
