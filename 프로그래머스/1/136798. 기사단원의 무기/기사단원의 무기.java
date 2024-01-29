@@ -5,18 +5,18 @@ class Solution {
         int answer = 0;
         
         for (int i=1; i<=number; i++) {
-            int primeCount = primeNumberCount(i);
+            int divisorCount = divisorNumberCount(i);
             
-            if(primeCount > limit) {
+            if(divisorCount > limit) {
                 answer += power;
             } else {
-                answer += primeCount;
+                answer += divisorCount;
             }
         }
         return answer;
     }
     
-    private int primeNumberCount(int num) {
+    private int divisorNumberCount(int num) {
         int count = 0;
         
         for(int i=1; i<=num / 2; i++) {
