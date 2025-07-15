@@ -1,14 +1,17 @@
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
-class Main {
+public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int n = Integer.parseInt(br.readLine());
-        int answer = 1;
-        for (int i = 1; i <= n; i++) {
-            answer *= i;
-        }
+        int result = factorial(n);
+        System.out.println(result);
+    }
 
-        System.out.println(answer);
+    static int factorial(int n) {
+        if(n <= 1) return 1;
+        return n * factorial(n - 1);
     }
 }
