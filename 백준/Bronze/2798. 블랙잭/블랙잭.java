@@ -1,8 +1,6 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -23,43 +21,37 @@ public class Main {
             arr[i] = Integer.parseInt(st.nextToken());
         }
 
-        // 1. 모든 조합을 구한다.
-        int[] out = new int[3];
-        List<List<Integer>> list = new ArrayList<>();
-        comb(list, out, 0, 0);
-
-        // 2. 모든 조합에서 M보다 작으면서 최대값을 구한다.
-        int result = getResult(list);
+        int result = getResult();
         System.out.println(result);
     }
 
-    private static int getResult(List<List<Integer>> list) {
-        int max = Integer.MIN_VALUE;
-        for (List<Integer> tempList : list) {
-            int sum = 0;
-            for (int num : tempList) {
-                sum += num;
+    private static int getResult() {
+        int result = Integer.MIN_VALUE;
+        // 3가지 카드를 고르는 모든 경우의 수를 고려하여 M보다 작으면서 max값을 구한다.
+        for (int i = 0; i < N - 2; i++) {
+            if (arr[i] > M) {
+                continue;
             }
-            if (sum <= M) {
-                max = Math.max(max, sum);
-            }
-        }
-        return max;
-    }
 
-    static void comb(List<List<Integer>> list, int[] out, int start, int depth) {
-        if (depth == out.length) {
-            List<Integer> tempList = new ArrayList<>();
-            for (int num : out) {
-                tempList.add(num);
-            }
-            list.add(tempList);
-            return;
-        }
+            for (int j = i + 1; j < N - 1; j++) {
+                if (arr[i] + arr[j] > M) {
+                    continue;
+                }
 
-        for (int i = start; i < arr.length; i++) {
-            out[depth] = arr[i];
-            comb(list, out, i + 1, depth + 1);
+                for (int k = j + 1; k < N; k++) {
+                    int sum = arr[i] + arr[j] + arr[k];
+
+                    if (sum == M) { // M과 같으면 즉시 리턴
+                        return sum;
+                    }
+
+                    if (sum <= M) {
+                        result = Math.max(result, sum);
+                    }
+                }
+            }
         }
+        return result;
     }
 }
+
