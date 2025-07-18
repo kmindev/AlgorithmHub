@@ -3,7 +3,6 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -29,7 +28,6 @@ public class Main {
             }
             int[] selectedNumbers = new int[6];
 
-            Arrays.sort(numbers);
             comp(numbers, selectedNumbers, 0, 0);
             output.append("\n");
         }
