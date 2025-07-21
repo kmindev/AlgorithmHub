@@ -1,33 +1,51 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.StringTokenizer;
 
 public class Main {
+
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+    static StringBuilder out = new StringBuilder();
+    static int N;
+    static int M;
+    static int[] numbers;
+
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
-        int n = Integer.parseInt(st.nextToken());
-        int m = Integer.parseInt(st.nextToken());
-        boolean[] visited = new boolean[n];
-        int[] arr = new int[m];
-        back(visited, arr, 0);
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
+
+        numbers = new int[N];
+        for (int i = 0; i < N; i++) {
+            numbers[i] = i + 1;
+        }
+
+        boolean[] visited = new boolean[N];
+        int[] selectedNumber = new int[M];
+        back(visited, selectedNumber, 0);
+
+        bw.write(out.toString());
+        bw.flush();
     }
 
-    private static void back(boolean[] visited, int[] arr, int depth) {
-        if (depth == arr.length) {
-            for (int num : arr) {
-                System.out.print(num + " ");
+    private static void back(boolean[] visited, int[] selectedNumber, int depth) {
+        if (depth == selectedNumber.length) {
+            for (int num : selectedNumber) {
+                out.append(num).append(" ");
             }
-            System.out.println();
+            out.append("\n");
             return;
         }
 
-        for (int i = 0; i < visited.length; i++) {
+        for (int i = 0; i < numbers.length; i++) {
             if (!visited[i]) {
                 visited[i] = true;
-                arr[depth] = i + 1;
-                back(visited, arr, depth + 1);
+                selectedNumber[depth] = numbers[i];
+                back(visited, selectedNumber, depth + 1);
                 visited[i] = false;
             }
         }
