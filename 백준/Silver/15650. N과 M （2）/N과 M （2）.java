@@ -6,16 +6,14 @@ import java.io.OutputStreamWriter;
 import java.util.StringTokenizer;
 
 public class Main {
-    static StringBuilder out;
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+    static StringBuilder out = new StringBuilder();
     static int N;
     static int M;
     static int[] numbers;
 
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-        out = new StringBuilder();
-
         StringTokenizer st = new StringTokenizer(br.readLine());
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
@@ -26,14 +24,14 @@ public class Main {
         }
 
         int[] selectedNumbers = new int[M];
-        comb(selectedNumbers, 0, 0);
+        back(selectedNumbers, 0, 0);
 
         bw.write(out.toString());
         bw.flush();
     }
 
-    private static void comb(int[] selectedNumbers, int start, int depth) {
-        if (depth == M) {
+    private static void back(int[] selectedNumbers, int start, int depth) {
+        if (depth == selectedNumbers.length) {
             for (int num : selectedNumbers) {
                 out.append(num).append(" ");
             }
@@ -41,9 +39,9 @@ public class Main {
             return;
         }
 
-        for (int i = start; i < N; i++) {
+        for (int i = start; i < numbers.length; i++) {
             selectedNumbers[depth] = numbers[i];
-            comb(selectedNumbers, i + 1, depth + 1);
+            back(selectedNumbers, i + 1, depth + 1);
         }
     }
 }
