@@ -21,20 +21,21 @@ public class Main {
             numbers[i] = Integer.parseInt(st.nextToken());
         }
 
-        for (int i = 0; i < N; i++) {
-            comb(i, numbers[i]);
-        }
+        dfs(0, 0);
 
+        COUNT = S == 0 ? COUNT - 1 : COUNT;
         System.out.println(COUNT);
     }
 
-    static void comb(int start, int sum) {
-        if (sum == S) {
-            COUNT++;
+    static void dfs(int depth, int sum) {
+        if (depth == N) {
+            if (sum == S) {
+                COUNT++;
+            }
+            return;
         }
 
-        for (int i = start + 1; i < N; i++) {
-            comb(i, sum + numbers[i]);
-        }
+        dfs(depth + 1, sum + numbers[depth]);
+        dfs(depth + 1, sum);
     }
 }
