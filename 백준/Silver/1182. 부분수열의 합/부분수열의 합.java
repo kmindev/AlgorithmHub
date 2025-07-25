@@ -21,29 +21,20 @@ public class Main {
             numbers[i] = Integer.parseInt(st.nextToken());
         }
 
-        for (int i = 1; i <= N; i++) {
-            comb(new int[i], 0, 0);
+        for (int i = 0; i < N; i++) {
+            comb(i, numbers[i]);
         }
 
         System.out.println(COUNT);
     }
 
-    static void comb(int[] selectedNumbers, int start, int depth) {
-        if (depth == selectedNumbers.length) {
-            int sum = 0;
-            for (int num : selectedNumbers) {
-                sum += num;
-            }
-
-            if (sum == S) {
-                COUNT++;
-            }
-            return;
+    static void comb(int start, int sum) {
+        if (sum == S) {
+            COUNT++;
         }
 
-        for (int i = start; i < N; i++) {
-            selectedNumbers[depth] = numbers[i];
-            comb(selectedNumbers, i + 1, depth + 1);
+        for (int i = start + 1; i < N; i++) {
+            comb(i, sum + numbers[i]);
         }
     }
 }
