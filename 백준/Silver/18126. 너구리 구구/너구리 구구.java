@@ -3,8 +3,10 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -31,29 +33,36 @@ public class Main {
             graph.get(B).add(new Node(A, C));
         }
 
-        visited[1] = true;
-        dfs(1, 0);
+        bfs();
         bw.write(MAX + "");
         bw.flush();
         bw.close();
     }
 
-    static void dfs(int target, long sum) {
-        visited[target] = true;
-        MAX = Math.max(MAX, sum);
-        for (Node next : graph.get(target)) {
-            if (visited[next.number]) {
-                continue;
+    static void bfs() {
+        Queue<Node> q = new ArrayDeque<>();
+        visited[1] = true;
+        q.offer(new Node(1, 0));
+
+        while (!q.isEmpty()) {
+            Node cur = q.poll();
+            MAX = Math.max(MAX, cur.distance);
+
+            for (Node next : graph.get(cur.number)) {
+                if (visited[next.number]) {
+                    continue;
+                }
+                visited[next.number] = true;
+                q.offer(new Node(next.number, cur.distance + next.distance));
             }
-            dfs(next.number, sum + next.distance);
         }
     }
 
     static class Node {
         int number;
-        int distance;
+        long distance;
 
-        Node(int number, int distance) {
+        Node(int number, long distance) {
             this.number = number;
             this.distance = distance;
         }
