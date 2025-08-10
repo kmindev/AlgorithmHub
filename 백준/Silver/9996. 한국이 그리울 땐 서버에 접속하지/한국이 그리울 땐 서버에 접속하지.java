@@ -26,8 +26,11 @@ public class Main {
     }
 
     static boolean isMatch(String[] parts, String input) {
-        String f = input.replace(parts[0], "F");
-        String e = f.replace(parts[1], "E");
-        return f.charAt(0) == 'F' && e.charAt(e.length() - 1) == 'E';
+        String start = parts[0];
+        String end = parts[1];
+        if (input.length() < start.length() + end.length()) {
+            return false;
+        }
+        return input.startsWith(start) && input.endsWith(end);
     }
 }
