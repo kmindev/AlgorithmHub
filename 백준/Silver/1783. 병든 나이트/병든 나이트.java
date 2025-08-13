@@ -23,7 +23,7 @@ public class Main {
             result = Math.min(3, (M - 1) / 2) + 1;
         } else if (N >= 3) {
             if (M < 7) {
-                result = Math.min(4, M);
+                result = Math.min(3, M - 1) + 1;
             } else {
                 result = M - 2;
             }
