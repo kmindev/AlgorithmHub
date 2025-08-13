@@ -20,7 +20,7 @@ public class Main {
         if (N == 1) {
             result = 1;
         } else if (N == 2) {
-            result = Math.min(4, (M - 1) / 2 + 1);
+            result = Math.min(3, (M - 1) / 2) + 1;
         } else if (N >= 3) {
             if (M < 7) {
                 result = Math.min(4, M);
