@@ -15,9 +15,7 @@ public class Main {
         List<String> words = new ArrayList<>();
         for (int i = 0; i < N; i++) {
             String word = br.readLine();
-            if (!words.contains(word)) {
-                words.add(word);
-            }
+            words.add(word);
         }
 
         words.sort((o1, o2) -> {
@@ -28,8 +26,11 @@ public class Main {
             return x;
         });
 
-        for (int i = 0; i < words.size(); i++) {
-            bw.write(words.get(i) + "\n");
+        bw.write(words.get(0) + "\n");
+        for (int i = 1; i < words.size(); i++) {
+            if (!words.get(i).equals(words.get(i - 1))) {
+                bw.write(words.get(i) + "\n");
+            }
         }
 
         bw.flush();
