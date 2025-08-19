@@ -6,30 +6,41 @@ import java.io.OutputStreamWriter;
 import java.util.StringTokenizer;
 
 public class Main {
-    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
     public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringTokenizer st = new StringTokenizer(br.readLine());
-        int m1 = Integer.parseInt(st.nextToken()); // 분자
-        int d1 = Integer.parseInt(st.nextToken()); // 분모
+        int A = Integer.parseInt(st.nextToken());
+        int B = Integer.parseInt(st.nextToken());
+
         st = new StringTokenizer(br.readLine());
-        int m2 = Integer.parseInt(st.nextToken()); // 분자
-        int d2 = Integer.parseInt(st.nextToken()); // 분모
+        int C = Integer.parseInt(st.nextToken());
+        int D = Integer.parseInt(st.nextToken());
 
-        int d = d2 * d1;
-        int m = (m1 * d2) + (m2 * d1);
+        int numerator = A * D + B * C;
+        int denominator = B * D;
 
-        int div = 1;
-        for (int i = d; i > 0; i--) {
-            if (d % i == 0 & m % i == 0) {
-                div = i;
-                break;
-            }
-        }
+        int mod = gcd(numerator, denominator);
+        numerator /= mod;
+        denominator /= mod;
 
-        bw.write(m / div + " " + d / div);
+        bw.write(numerator + " " + denominator + "\n");
         bw.flush();
         bw.close();
+        br.close();
+    }
+
+    public static int gcd(int a, int b) {
+        if (a <= b) {
+            int temp = a;
+            a = b;
+            b = temp;
+        }
+
+        if (b == 0) {
+            return a;
+        }
+        return gcd(b, a % b);
     }
 }
