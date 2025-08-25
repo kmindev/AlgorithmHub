@@ -1,20 +1,17 @@
 class Solution {
     public int[] solution(String[] wallpaper) {
         
-        int lux = -1;
+        int lux = Integer.MAX_VALUE;
         int luy = Integer.MAX_VALUE;
-        int rdx = -1;
+        int rdx = Integer.MIN_VALUE;
         int rdy = Integer.MIN_VALUE;
         
         for(int i = 0; i < wallpaper.length; i++) {
             for(int j = 0; j < wallpaper[i].length(); j++) {
                 char ch = wallpaper[i].charAt(j);
                 if(ch == '#') {
-                    rdx = i;
-                    if(lux == -1) {
-                        lux = i;
-                    }
-                    
+                    lux = Math.min(lux, i);
+                    rdx = Math.max(lux, i);
                     luy = Math.min(luy, j);
                     rdy = Math.max(rdy, j);
                 }
