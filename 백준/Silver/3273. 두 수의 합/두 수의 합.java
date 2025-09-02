@@ -24,22 +24,23 @@ public class Main {
         x = Integer.parseInt(br.readLine());
 
         Arrays.sort(nums);
-        int result = binarySearch(0, n - 1);
+        int result = toPoint(0, n - 1);
         bw.write(result + "\n");
         bw.flush();
         bw.close();
     }
 
-    private static int binarySearch(int start, int end) {
+    private static int toPoint(int start, int end) {
         int result = 0;
         while (start < end) {
-
-            if (nums[start] + nums[end] == x) {
+            int sum = nums[start] + nums[end];
+            if (sum == x) {
                 result++;
                 start++;
-            } else if (nums[start] + nums[end] > x) {
                 end--;
-            } else if (nums[start] + nums[end] < x) {
+            } else if (sum > x) {
+                end--;
+            } else {
                 start++;
             }
         }
