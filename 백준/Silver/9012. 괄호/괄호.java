@@ -1,31 +1,44 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.Stack;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int T = Integer.parseInt(br.readLine());
-        for (int i = 0; i < T; i++) {
-            String line = br.readLine();
-            Stack<String> stack = new Stack<>();
-            boolean check = false;
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-            for (int j = 0; j < line.length(); j++) {
-                String token = line.substring(j, j + 1);
-                if (token.equals("(")) {
-                    stack.push(token);
-                } else if (token.equals(")")) {
-                    if (stack.empty()) {
-                        check = true;
-                        break;
-                    }
-                    stack.pop();
-                }
+    static int N;
+
+    public static void main(String[] args) throws IOException {
+        N = Integer.parseInt(br.readLine());
+        for (int i = 0; i < N; i++) {
+            String line = br.readLine();
+            if (isVPS(line)) {
+                bw.write("YES\n");
+            } else {
+                bw.write("NO\n");
             }
-            if (!stack.empty() || check) System.out.println("NO");
-            else System.out.println("YES");
         }
+
+        bw.flush();
+        bw.close();
+    }
+
+    private static boolean isVPS(String line) {
+        Stack<Character> stack = new Stack<>();
+        for (int i = 0; i < line.length(); i++) {
+            char ch = line.charAt(i);
+            if (ch == '(') {
+                stack.push(ch);
+            } else if (ch == ')') {
+                if (stack.isEmpty()) {
+                    return false;
+                }
+                stack.pop();
+            }
+        }
+        return stack.isEmpty();
     }
 }
