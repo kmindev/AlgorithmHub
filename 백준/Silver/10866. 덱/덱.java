@@ -1,61 +1,76 @@
-import java.io.*;
-import java.util.ArrayDeque;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.Deque;
+import java.util.LinkedList;
 import java.util.StringTokenizer;
 
-class Main {
+public class Main {
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+    static int N;
+
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        Deque<Integer> deque = new ArrayDeque<>();
-        StringBuilder result = new StringBuilder();
+        N = Integer.parseInt(br.readLine());
+        Deque<Integer> dq = new LinkedList<>();
 
-        int n = Integer.parseInt(br.readLine());
-
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < N; i++) {
             StringTokenizer st = new StringTokenizer(br.readLine());
             String command = st.nextToken();
-
-            if (command.equals("push_front")) {
-                int num = Integer.parseInt(st.nextToken());
-                deque.addFirst(num);
-            } else if (command.equals("push_back")) {
-                int num = Integer.parseInt(st.nextToken());
-                deque.addLast(num);
-            } else if (command.equals("pop_front")) {
-                if (deque.isEmpty()) {
-                    result.append(-1 + "\n");
-                } else {
-                    result.append(deque.pollFirst() + "\n");
-                }
-            } else if (command.equals("pop_back")) {
-                if (deque.isEmpty()) {
-                    result.append(-1 + "\n");
-                } else {
-                    result.append(deque.pollLast() + "\n");
-                }
-            } else if (command.equals("size")) {
-                result.append(deque.size() + "\n");
-            } else if (command.equals("empty")) {
-                if (deque.isEmpty()) {
-                    result.append(1 + "\n");
-                } else {
-                    result.append(0 + "\n");
-                }
-            } else if (command.equals("front")) {
-                if (deque.isEmpty()) {
-                    result.append(-1 + "\n");
-                } else {
-                    result.append(deque.getFirst() + "\n");
-                }
-            } else if (command.equals("back")) {
-                if (deque.isEmpty()) {
-                    result.append(-1 + "\n");
-                } else {
-                    result.append(deque.getLast() + "\n");
-                }
+            switch (command) {
+                case "push_front":
+                    int pushFrontNum = Integer.parseInt(st.nextToken());
+                    dq.offerFirst(pushFrontNum);
+                    break;
+                case "push_back":
+                    int pushBackNum = Integer.parseInt(st.nextToken());
+                    dq.offerLast(pushBackNum);
+                    break;
+                case "pop_front":
+                    Integer popFirstNum = dq.pollFirst();
+                    if (popFirstNum == null) {
+                        bw.write("-1\n");
+                    } else {
+                        bw.write(popFirstNum + "\n");
+                    }
+                    break;
+                case "pop_back":
+                    Integer popBackNum = dq.pollLast();
+                    if (popBackNum == null) {
+                        bw.write("-1\n");
+                    } else {
+                        bw.write(popBackNum + "\n");
+                    }
+                    break;
+                case "size":
+                    bw.write(dq.size() + "\n");
+                    break;
+                case "empty":
+                    bw.write(dq.isEmpty() ? "1\n" : "0\n");
+                    break;
+                case "front":
+                    Integer frontNum = dq.peekFirst();
+                    if (frontNum == null) {
+                        bw.write("-1\n");
+                    } else {
+                        bw.write(frontNum + "\n");
+                    }
+                    break;
+                case "back":
+                    Integer backNum = dq.peekLast();
+                    if (backNum == null) {
+                        bw.write("-1\n");
+                    } else {
+                        bw.write(backNum + "\n");
+                    }
+                    break;
             }
         }
 
-        System.out.println(result);
+        bw.flush();
+        bw.close();
     }
 }
