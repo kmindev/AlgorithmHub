@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -38,7 +40,7 @@ public class Main {
         for (int i = 1; i <= N; i++) {
             if (!visited[i]) {
                 COUNT++;
-                dfs(i, visited);
+                bfs(i, visited);
             }
         }
 
@@ -47,11 +49,18 @@ public class Main {
         bw.close();
     }
 
-    static void dfs(int start, boolean[] visited) {
+    static void bfs(int start, boolean[] visited) {
+        Queue<Integer> q = new LinkedList<>();
+        q.offer(start);
         visited[start] = true;
-        for (int next : graph.get(start)) {
-            if (!visited[next]) {
-                dfs(next, visited);
+
+        while (!q.isEmpty()) {
+            int cur = q.poll();
+            for (int next : graph.get(cur)) {
+                if (!visited[next]) {
+                    q.offer(next);
+                    visited[next] = true;
+                }
             }
         }
     }
