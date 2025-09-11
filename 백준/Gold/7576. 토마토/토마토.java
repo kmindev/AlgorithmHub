@@ -1,80 +1,83 @@
-import java.util.*;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.StringTokenizer;
 
-class Main {
-    private static int m;
-    private static int n;
-    private static int[][] map;
-    private static Deque<Node> q = new ArrayDeque<>();
-    private static int[] dx = {-1, 1, 0, 0};
-    private static int[] dy = {0, 0, -1, 1};
+public class Main {
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+    static int N;
+    static int M;
+    static int[][] map;
+    static int[] dx = {0, -1, 0, 1};
+    static int[] dy = {-1, 0, 1, 0};
+
+    static Queue<Point> q = new LinkedList<>();
 
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
         StringTokenizer st = new StringTokenizer(br.readLine());
-        m = Integer.valueOf(st.nextToken());
-        n = Integer.valueOf(st.nextToken());
-        map = new int[n][m];
+        M = Integer.parseInt(st.nextToken());
+        N = Integer.parseInt(st.nextToken());
 
-        for (int i = 0; i < n; i++) {
+        map = new int[N][M];
+        for (int i = 0; i < N; i++) {
             st = new StringTokenizer(br.readLine());
-
-            for (int j = 0; j < m; j++) {
-                map[i][j] = Integer.valueOf(st.nextToken());
-
+            for (int j = 0; j < M; j++) {
+                map[i][j] = Integer.parseInt(st.nextToken());
                 if (map[i][j] == 1) {
-                    q.offer(new Node(i, j));
+                    q.offer(new Point(i, j));
                 }
             }
         }
-        System.out.println(bfs());
+
+        bfs();
+
+        boolean isFailed = false;
+        int max = Integer.MIN_VALUE;
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < M; j++) {
+                if (map[i][j] == 0) {
+                    isFailed = true;
+                    break;
+                }
+                max = Math.max(max, map[i][j]);
+            }
+        }
+
+        bw.write(isFailed ? "-1" : max - 1 + " ");
+        bw.flush();
+        bw.close();
     }
 
-    private static int bfs() {
-        // bfs
+    private static void bfs() {
         while (!q.isEmpty()) {
-            Node node = q.poll();
-            int x = node.x;
-            int y = node.y;
-
+            Point cur = q.poll();
             for (int i = 0; i < 4; i++) {
-                int nx = x + dx[i];
-                int ny = y + dy[i];
+                int nx = cur.x + dx[i];
+                int ny = cur.y + dy[i];
 
-                if (nx < 0 || ny < 0 || nx > n - 1 || ny > m - 1)
+                if (nx < 0 || nx >= N || ny < 0 || ny >= M || map[nx][ny] != 0) {
                     continue;
-
-                if (map[nx][ny] == 0) {
-                    q.offer(new Node(nx, ny));
-                    map[nx][ny] = map[x][y] + 1;
                 }
+                map[nx][ny] = map[cur.x][cur.y] + 1;
+                q.offer(new Point(nx, ny));
             }
         }
-
-        int result = 0;
-
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-
-                if (map[i][j] == 0) // 익지 않은 토마토가 있으면
-                    return -1;
-                
-                result = Math.max(result, map[i][j]); // 최대 일 수를 구한다.
-            }
-        }
-
-        return result - 1; // 최대 일 수 - 1 
     }
 
-
-    private static class Node {
+    static class Point {
         int x;
         int y;
 
-        private Node(int x, int y) {
+        public Point(int x, int y) {
             this.x = x;
             this.y = y;
         }
     }
+
 }
