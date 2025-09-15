@@ -42,37 +42,27 @@ public class Main {
     }
 
     static int solve() {
-        int day = -1;
+        int day = 0;
         while (true) {
-            boolean[][] moves = new boolean[N][N];
-            day++;
             boolean[][] visited = new boolean[N][N];
+            boolean moved = false;  // 하루 동안 국경이 열렸는지 체크
+
             for (int i = 0; i < N; i++) {
                 for (int j = 0; j < N; j++) {
-                    moves[i][j] = false;
                     if (!visited[i][j]) {
-                        boolean canMove = bfs(visited, i, j);
-                        moves[i][j] = canMove;
+                        if (bfs(visited, i, j)) {
+                            moved = true;
+                        }
                     }
                 }
             }
 
-            if (!canMove(moves)) {
+            if (!moved) {
                 break;
             }
+            day++;
         }
         return day;
-    }
-
-    private static boolean canMove(boolean[][] moves) {
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < N; j++) {
-                if (moves[i][j]) {
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 
     private static boolean bfs(boolean[][] visited, int x, int y) {
