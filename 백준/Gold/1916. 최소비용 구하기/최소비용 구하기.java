@@ -43,14 +43,14 @@ public class Main {
         int start = Integer.parseInt(st.nextToken());
         int end = Integer.parseInt(st.nextToken());
 
-        dijkstra(start);
+        int result = dijkstra(start, end);
 
-        bw.write(result[end] + "\n");
+        bw.write(result + "\n");
         bw.flush();
         bw.close();
     }
 
-    static void dijkstra(int start) {
+    static int dijkstra(int start, int end) {
         PriorityQueue<Point> pq = new PriorityQueue<>((o1, o2) -> o1.w - o2.w);
         pq.offer(new Point(start, 0));
         result[start] = 0;
@@ -71,6 +71,7 @@ public class Main {
                 }
             }
         }
+        return result[end];
     }
 
     static class Point {
