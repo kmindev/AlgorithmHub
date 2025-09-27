@@ -15,16 +15,16 @@ public class Main {
     static int D;
 
     static List<List<Point>> graph = new ArrayList<>();
-    static int[] dist;
+    static int[] dp;
 
     public static void main(String[] args) throws IOException {
         StringTokenizer st = new StringTokenizer(br.readLine());
         N = Integer.parseInt(st.nextToken());
         D = Integer.parseInt(st.nextToken());
-        dist = new int[10000];
-        for (int i = 0; i < 10000; i++) {
+        dp = new int[D + 1];
+        for (int i = 0; i <= D; i++) {
             graph.add(new ArrayList<>());
-            dist[i] = Integer.MAX_VALUE;
+            dp[i] = Integer.MAX_VALUE;
         }
 
         for (int i = 0; i < N; i++) {
@@ -32,18 +32,20 @@ public class Main {
             int start = Integer.parseInt(st.nextToken());
             int end = Integer.parseInt(st.nextToken());
             int distance = Integer.parseInt(st.nextToken());
-            graph.get(end).add(new Point(start, distance));
-        }
-
-        dist[0] = 0;
-        for (int i = 1; i <= D; i++) {
-            dist[i] = dist[i - 1] + 1;
-            for (Point next : graph.get(i)) {
-                dist[i] = Math.min(dist[i], dist[next.start] + next.distance);
+            if (end <= D) {
+                graph.get(end).add(new Point(start, distance));
             }
         }
 
-        bw.write(dist[D] + "");
+        dp[0] = 0;
+        for (int i = 1; i <= D; i++) {
+            dp[i] = dp[i - 1] + 1;
+            for (Point next : graph.get(i)) {
+                dp[i] = Math.min(dp[i], dp[next.start] + next.distance);
+            }
+        }
+
+        bw.write(dp[D] + "");
         bw.flush();
         bw.close();
         br.close();
