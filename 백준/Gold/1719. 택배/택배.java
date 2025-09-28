@@ -39,7 +39,7 @@ public class Main {
             int start = Integer.parseInt(st.nextToken());
             int end = Integer.parseInt(st.nextToken());
             int weight = Integer.parseInt(st.nextToken());
-            map[end][start] = map[start][end] = Math.min(map[start][end], weight);
+            map[start][end] = map[end][start] = Math.min(map[end][start], weight);
         }
 
         for (int k = 1; k <= N; k++) {
