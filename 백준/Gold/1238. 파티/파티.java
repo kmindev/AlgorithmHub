@@ -17,7 +17,9 @@ public class Main {
     static int M;
     static int X;
     static int INF = 10000 * 100;
-    static List<List<Point>> graph = new ArrayList<>();
+    static List<List<Point>> toX = new ArrayList<>();
+    static List<List<Point>> fromX = new ArrayList<>();
+
 
     public static void main(String[] args) throws IOException {
         StringTokenizer st = new StringTokenizer(br.readLine());
@@ -26,7 +28,8 @@ public class Main {
         X = Integer.parseInt(st.nextToken());
 
         for (int i = 0; i <= N; i++) {
-            graph.add(new ArrayList<>());
+            toX.add(new ArrayList<>());
+            fromX.add(new ArrayList<>());
         }
 
         for (int i = 0; i < M; i++) {
@@ -34,39 +37,32 @@ public class Main {
             int start = Integer.parseInt(st.nextToken());
             int end = Integer.parseInt(st.nextToken());
             int t = Integer.parseInt(st.nextToken());
-            graph.get(start).add(new Point(end, t));
+            toX.get(start).add(new Point(end, t));
+            fromX.get(end).add(new Point(start, t));
         }
 
-        dijkstra(X);
+        int[] toXDist = dijkstra(toX); // N -> X
+        int[] fromXDist = dijkstra(fromX); // X -> N
 
-        // N -> X
-        int[] result = new int[N + 1];
+        int max = Integer.MIN_VALUE;
         for (int i = 1; i <= N; i++) {
-            int[] dist = dijkstra(i);
-            result[i] = dist[X];
+            max = Math.max(max, toXDist[i] + fromXDist[i]);
         }
 
-        // X -> N
-        int[] dist = dijkstra(X);
-        for (int i = 1; i <= N; i++) {
-            result[i] += dist[i];
-        }
-
-        int max = Arrays.stream(result).max().getAsInt();
         bw.write(max + "\n");
         bw.flush();
         bw.close();
         br.close();
     }
 
-    static int[] dijkstra(int start) {
+    static int[] dijkstra(List<List<Point>> graph) {
         int[] dist = new int[N + 1];
         boolean[] visited = new boolean[N + 1];
         Arrays.fill(dist, INF);
 
         PriorityQueue<Point> pq = new PriorityQueue<>((a, b) -> a.w - b.w);
-        pq.offer(new Point(start, 0));
-        dist[start] = 0;
+        pq.offer(new Point(X, 0));
+        dist[X] = 0;
 
         while (!pq.isEmpty()) {
             Point cur = pq.poll();
