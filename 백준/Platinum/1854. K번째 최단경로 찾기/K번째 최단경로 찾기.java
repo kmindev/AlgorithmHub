@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.StringTokenizer;
@@ -27,7 +28,7 @@ public class Main {
 
         for (int i = 0; i <= N; i++) {
             graph.add(new ArrayList<>());
-            distQueue.add(new PriorityQueue<>(K, (o1, o2) -> o1 < o2 ? 1 : -1));
+            distQueue.add(new PriorityQueue<>(K, Comparator.reverseOrder()));
         }
 
         for (int i = 0; i < M; i++) {
