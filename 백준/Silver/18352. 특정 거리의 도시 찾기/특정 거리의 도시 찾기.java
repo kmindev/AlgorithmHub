@@ -4,8 +4,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -17,11 +18,9 @@ public class Main {
     static int K;
     static int X;
 
-    static int INF = 300_000;
     static int[] dist;
-    static boolean[] visited;
 
-    static List<List<Node>> graph = new ArrayList<>();
+    static List<List<Integer>> graph = new ArrayList<>();
 
     public static void main(String[] args) throws IOException {
         StringTokenizer st = new StringTokenizer(br.readLine());
@@ -31,10 +30,9 @@ public class Main {
         X = Integer.parseInt(st.nextToken());
 
         dist = new int[N + 1];
-        visited = new boolean[N + 1];
 
         for (int i = 0; i <= N; i++) {
-            dist[i] = INF;
+            dist[i] = -1;
             graph.add(new ArrayList<>());
         }
 
@@ -42,10 +40,10 @@ public class Main {
             st = new StringTokenizer(br.readLine());
             int a = Integer.parseInt(st.nextToken());
             int b = Integer.parseInt(st.nextToken());
-            graph.get(a).add(new Node(b, 1));
+            graph.get(a).add(b);
         }
 
-        dijkstra(X);
+        bfs(X);
 
         boolean flag = false;
         for (int i = 1; i < dist.length; i++) {
@@ -64,34 +62,20 @@ public class Main {
         br.close();
     }
 
-    static void dijkstra(int start) {
-        PriorityQueue<Node> pq = new PriorityQueue<>((o1, o2) -> o1.w - o2.w);
-        pq.add(new Node(start, 0));
+    static void bfs(int start) {
+        Queue<Integer> q = new LinkedList<>();
+        q.add(start);
         dist[start] = 0;
 
-        while (!pq.isEmpty()) {
-            Node cur = pq.poll();
-            if (visited[cur.x]) {
-                continue;
-            }
-            visited[cur.x] = true;
+        while (!q.isEmpty()) {
+            int cur = q.poll();
 
-            for (Node next : graph.get(cur.x)) {
-                if (dist[next.x] > dist[cur.x] + next.w) {
-                    dist[next.x] = dist[cur.x] + next.w;
-                    pq.offer(new Node(next.x, dist[next.x]));
+            for (int next : graph.get(cur)) {
+                if (dist[next] == -1) {
+                    dist[next] = dist[cur] + 1;
+                    q.add(next);
                 }
             }
-        }
-    }
-
-    static class Node {
-        int x;
-        int w;
-
-        public Node(int x, int w) {
-            this.x = x;
-            this.w = w;
         }
     }
 }
