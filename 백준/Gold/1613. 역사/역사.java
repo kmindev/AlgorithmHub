@@ -10,11 +10,9 @@ public class Main {
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-    static int INF = 987654321;
-
     static int N;
     static int K;
-    static int[][] check;
+    static boolean[][] check;
 
     static int S;
 
@@ -23,25 +21,21 @@ public class Main {
         N = Integer.parseInt(st.nextToken());
         K = Integer.parseInt(st.nextToken());
 
-        check = new int[N + 1][N + 1];
-        for (int i = 1; i <= N; i++) {
-            for (int j = 1; j <= N; j++) {
-                if (i != j) {
-                    check[i][j] = INF;
-                }
-            }
-        }
+        check = new boolean[N + 1][N + 1];
+
         for (int i = 0; i < K; i++) {
             st = new StringTokenizer(br.readLine());
             int a = Integer.parseInt(st.nextToken());
             int b = Integer.parseInt(st.nextToken());
-            check[a][b] = 1;
+            check[a][b] = true;
         }
 
         for (int k = 1; k <= N; k++) {
             for (int i = 1; i <= N; i++) {
                 for (int j = 1; j <= N; j++) {
-                    check[i][j] = Math.min(check[i][j], check[i][k] + check[k][j]);
+                    if (check[i][k] && check[k][j]) {
+                        check[i][j] = true;
+                    }
                 }
             }
         }
@@ -52,12 +46,12 @@ public class Main {
             int a = Integer.parseInt(st.nextToken());
             int b = Integer.parseInt(st.nextToken());
 
-            if (check[a][b] == INF && check[b][a] == INF) {
+            if (!check[a][b] && !check[b][a]) {
                 bw.write("0\n");
-            } else if (check[a][b] > check[b][a]) {
-                bw.write("1\n");
-            } else {
+            } else if (check[a][b]) {
                 bw.write("-1\n");
+            } else {
+                bw.write("1\n");
             }
         }
 
