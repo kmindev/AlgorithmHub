@@ -3,6 +3,8 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -14,9 +16,10 @@ public class Main {
     static int M;
     static int findX;
     static int findY;
+    static int answer = -1;
 
-    static int[][] map;
-    static int INF = 987654321;
+    static List<List<Integer>> graph = new ArrayList<>();
+    static boolean[] visited;
 
     public static void main(String[] args) throws IOException {
         N = Integer.parseInt(br.readLine());
@@ -24,38 +27,39 @@ public class Main {
         findX = Integer.parseInt(st.nextToken());
         findY = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(br.readLine());
+        visited = new boolean[N + 1];
 
-        map = new int[N + 1][N + 1];
-        for (int i = 1; i <= N; i++) {
-            for (int j = 1; j <= N; j++) {
-                if (i != j) {
-                    map[i][j] = INF;
-                }
-            }
+        for (int i = 0; i <= N; i++) {
+            graph.add(new ArrayList<>());
         }
 
         for (int i = 0; i < M; i++) {
             st = new StringTokenizer(br.readLine());
             int x = Integer.parseInt(st.nextToken());
             int y = Integer.parseInt(st.nextToken());
-            map[x][y] = 1;
-            map[y][x] = 1;
+            graph.get(x).add(y);
+            graph.get(y).add(x);
         }
 
-        for (int k = 1; k <= N; k++) {
-            for (int i = 1; i <= N; i++) {
-                for (int j = 1; j <= N; j++) {
-                    map[i][j] = Math.min(map[i][j], map[i][k] + map[k][j]);
-                }
-            }
-        }
-
-        int answer = map[findX][findY];
-        answer = answer == INF ? -1 : answer;
-
+        dfs(findX, findY, 0);
         bw.write(answer + "\n");
         bw.flush();
         bw.close();
         br.close();
+    }
+
+    static void dfs(int x, int y, int count) {
+        visited[x] = true;
+
+        if (x == y) {
+            answer = count;
+            return;
+        }
+
+        for (int next : graph.get(x)) {
+            if (!visited[next]) {
+                dfs(next, y, count + 1);
+            }
+        }
     }
 }
