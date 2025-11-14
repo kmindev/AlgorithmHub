@@ -23,8 +23,21 @@ public class Main {
             if (A.length() != B.length()) {
                 return A.length() - B.length();
             }
-            int sumA = sum(A);
-            int sumB = sum(B);
+            int sumA = 0;
+            int sumB = 0;
+            
+            for (int i = 0; i < A.length(); i++) {
+                char a = A.charAt(i);
+                char b = B.charAt(i);
+                
+                if (Character.isDigit(a)) {
+                    sumA += Character.getNumericValue(a);
+                }
+                
+                if (Character.isDigit(b)) {
+                    sumB += Character.getNumericValue(b);
+                }
+            }
             if (sumA != sumB) {
                 return sumA - sumB;
             }
@@ -38,16 +51,5 @@ public class Main {
         bw.flush();
         bw.close();
         br.close();
-    }
-
-    private static int sum(String str) {
-        int sum = 0;
-        for (int i = 0; i < str.length(); i++) {
-            char ch = str.charAt(i);
-            if (Character.isDigit(ch)) {
-                sum += Character.getNumericValue(ch);
-            }
-        }
-        return sum;
     }
 }
